@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import '../../firebase_options.dart';
 import '../../data/models/user_model.dart';
 
 class FirebaseService {
@@ -9,7 +10,9 @@ class FirebaseService {
 
   // Инициализация Firebase
   static Future<void> initialize() async {
-    await Firebase.initializeApp();
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
   }
 
   // Регистрация
@@ -87,6 +90,11 @@ class FirebaseService {
 
       // Получаем данные пользователя
       final doc = await _firestore.collection('users').doc(uid).get();
+
+      if (!doc.exists) {
+        throw Exception('User data not found');
+      }
+
       return UserModel.fromJson(doc.data()!);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found' || e.code == 'wrong-password') {
@@ -127,5 +135,17 @@ class FirebaseService {
   static Future<bool> isEmailVerified() async {
     await _auth.currentUser?.reload();
     return _auth.currentUser?.emailVerified ?? false;
+  }
+
+  // Stream для отслеживания изменений пользователя
+  static Stream<UserModel?> userStream() {
+    return _auth.authStateChanges().asyncMap((user) async {
+      if (user == null) return null;
+
+      final doc = await _firestore.collection('users').doc(user.uid).get();
+      if (!doc.exists) return null;
+
+      return UserModel.fromJson(doc.data()!);
+    });
   }
 }

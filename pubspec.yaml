@@ -1,3 +1,12 @@
+name: language_quest
+description: A language learning app with gamification.
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+  flutter: ">=3.10.0"
+
 dependencies:
   flutter:
     sdk: flutter
@@ -10,7 +19,7 @@ dependencies:
   # Navigation
   go_router: ^14.2.7
 
-  # Network & API (оставляем для будущего custom backend)
+  # Network & API
   dio: ^5.7.0
 
   # Firebase
@@ -31,6 +40,24 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^4.0.0
-  build_runner: ^2.4.12
+  flutter_lints: ^5.0.0
+  build_runner: ^2.4.13
   json_serializable: ^6.8.0
+
+flutter:
+  uses-material-design: true
+  generate: true
+
+  assets:
+    - assets/images/mascots/
+    - assets/images/backgrounds/
+    - assets/images/ui_elements/
+    - assets/animations/
+    - assets/fonts/
+
+  fonts:
+    - family: GameFont
+      fonts:
+        - asset: assets/fonts/game_font_regular.ttf
+        - asset: assets/fonts/game_font_bold.ttf
+          weight: 700

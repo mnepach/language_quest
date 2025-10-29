@@ -63,7 +63,13 @@ class ProfileScreen extends StatelessWidget {
       children: [
         IconButton(
           icon: const Icon(Icons.arrow_back),
-          onPressed: () => context.go('/home'),
+          onPressed: () {
+            if (context.canPop()) {
+              context.pop();
+            } else {
+              context.go('/home');
+            }
+          },
         ),
         Expanded(
           child: Text(
@@ -87,7 +93,6 @@ class ProfileScreen extends StatelessWidget {
             padding: EdgeInsets.all(AppDimensions.spacingL),
             child: Column(
               children: [
-                // Avatar
                 Container(
                   width: AppDimensions.avatarXl,
                   height: AppDimensions.avatarXl,
@@ -96,10 +101,7 @@ class ProfileScreen extends StatelessWidget {
                     gradient: const LinearGradient(
                       colors: [AppColors.primary, AppColors.secondary],
                     ),
-                    border: Border.all(
-                      color: Colors.white,
-                      width: 4,
-                    ),
+                    border: Border.all(color: Colors.white, width: 4),
                     boxShadow: [
                       BoxShadow(
                         color: AppColors.primary.withOpacity(0.3),
@@ -110,10 +112,7 @@ class ProfileScreen extends StatelessWidget {
                   ),
                   child: user?.avatarUrl != null
                       ? ClipOval(
-                    child: Image.network(
-                      user!.avatarUrl!,
-                      fit: BoxFit.cover,
-                    ),
+                    child: Image.network(user!.avatarUrl!, fit: BoxFit.cover),
                   )
                       : Icon(
                     Icons.person,
@@ -122,7 +121,6 @@ class ProfileScreen extends StatelessWidget {
                   ),
                 ),
                 SizedBox(height: AppDimensions.spacingM),
-                // Username
                 Text(
                   user?.username ?? 'User',
                   style: Theme.of(context).textTheme.headlineMedium?.copyWith(
@@ -130,7 +128,6 @@ class ProfileScreen extends StatelessWidget {
                   ),
                 ),
                 SizedBox(height: AppDimensions.spacingXs),
-                // Email
                 Text(
                   user?.email ?? '',
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
@@ -138,7 +135,6 @@ class ProfileScreen extends StatelessWidget {
                   ),
                 ),
                 SizedBox(height: AppDimensions.spacingL),
-                // Level Badge
                 Container(
                   padding: EdgeInsets.symmetric(
                     horizontal: AppDimensions.spacingL,
@@ -148,8 +144,7 @@ class ProfileScreen extends StatelessWidget {
                     gradient: const LinearGradient(
                       colors: [AppColors.accent, AppColors.warning],
                     ),
-                    borderRadius:
-                    BorderRadius.circular(AppDimensions.radiusRound),
+                    borderRadius: BorderRadius.circular(AppDimensions.radiusRound),
                     boxShadow: [
                       BoxShadow(
                         color: AppColors.accent.withOpacity(0.3),
@@ -161,16 +156,11 @@ class ProfileScreen extends StatelessWidget {
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Icon(
-                        Icons.military_tech,
-                        color: Colors.white,
-                        size: AppDimensions.iconM,
-                      ),
+                      Icon(Icons.military_tech, color: Colors.white, size: AppDimensions.iconM),
                       SizedBox(width: AppDimensions.spacingS),
                       Text(
                         'Level ${user?.level ?? 1}',
-                        style:
-                        Theme.of(context).textTheme.titleMedium?.copyWith(
+                        style: Theme.of(context).textTheme.titleMedium?.copyWith(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
                         ),
@@ -179,16 +169,12 @@ class ProfileScreen extends StatelessWidget {
                   ),
                 ),
                 SizedBox(height: AppDimensions.spacingM),
-                // Experience Progress
                 Column(
                   children: [
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
-                          'Experience',
-                          style: Theme.of(context).textTheme.bodySmall,
-                        ),
+                        Text('Experience', style: Theme.of(context).textTheme.bodySmall),
                         Text(
                           '${user?.experience ?? 0} / ${((user?.level ?? 1) * 100)}',
                           style: Theme.of(context).textTheme.bodySmall?.copyWith(
@@ -199,16 +185,12 @@ class ProfileScreen extends StatelessWidget {
                     ),
                     SizedBox(height: AppDimensions.spacingS),
                     ClipRRect(
-                      borderRadius:
-                      BorderRadius.circular(AppDimensions.radiusRound),
+                      borderRadius: BorderRadius.circular(AppDimensions.radiusRound),
                       child: LinearProgressIndicator(
-                        value: (user?.experience ?? 0) /
-                            ((user?.level ?? 1) * 100),
+                        value: (user?.experience ?? 0) / ((user?.level ?? 1) * 100),
                         minHeight: AppDimensions.progressBarHeight,
                         backgroundColor: AppColors.bgSecondary,
-                        valueColor: const AlwaysStoppedAnimation<Color>(
-                          AppColors.primary,
-                        ),
+                        valueColor: const AlwaysStoppedAnimation<Color>(AppColors.primary),
                       ),
                     ),
                   ],
@@ -282,11 +264,7 @@ class ProfileScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(
-              icon,
-              color: color,
-              size: AppDimensions.iconL,
-            ),
+            Icon(icon, color: color, size: AppDimensions.iconL),
             SizedBox(height: AppDimensions.spacingS),
             Text(
               value,
@@ -320,14 +298,9 @@ class ProfileScreen extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
-                'Achievements',
-                style: Theme.of(context).textTheme.headlineSmall,
-              ),
+              Text('Achievements', style: Theme.of(context).textTheme.headlineSmall),
               TextButton(
-                onPressed: () {
-                  // Navigate to achievements page
-                },
+                onPressed: () {},
                 child: const Text('View All'),
               ),
             ],
@@ -371,12 +344,8 @@ class ProfileScreen extends StatelessWidget {
             decoration: BoxDecoration(
               shape: BoxShape.circle,
               gradient: isUnlocked
-                  ? const LinearGradient(
-                colors: [AppColors.accent, AppColors.warning],
-              )
-                  : LinearGradient(
-                colors: [Colors.grey.shade300, Colors.grey.shade400],
-              ),
+                  ? const LinearGradient(colors: [AppColors.accent, AppColors.warning])
+                  : LinearGradient(colors: [Colors.grey.shade300, Colors.grey.shade400]),
               boxShadow: isUnlocked
                   ? [
                 BoxShadow(
@@ -412,10 +381,7 @@ class ProfileScreen extends StatelessWidget {
       children: [
         Padding(
           padding: EdgeInsets.symmetric(horizontal: AppDimensions.spacingS),
-          child: Text(
-            'Settings',
-            style: Theme.of(context).textTheme.headlineSmall,
-          ),
+          child: Text('Settings', style: Theme.of(context).textTheme.headlineSmall),
         ),
         SizedBox(height: AppDimensions.spacingM),
         Card(
@@ -477,15 +443,10 @@ class ProfileScreen extends StatelessWidget {
     Color? textColor,
   }) {
     return ListTile(
-      leading: Icon(
-        icon,
-        color: textColor ?? AppColors.textPrimary,
-      ),
+      leading: Icon(icon, color: textColor ?? AppColors.textPrimary),
       title: Text(
         title,
-        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-          color: textColor,
-        ),
+        style: Theme.of(context).textTheme.bodyLarge?.copyWith(color: textColor),
       ),
       trailing: Icon(
         Icons.arrow_forward_ios,

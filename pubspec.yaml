@@ -1,11 +1,3 @@
-name: language_quest
-description: Gamified language learning app with Y2K/Kirby design
-publish_to: 'none'
-version: 1.0.0+1
-
-environment:
-  sdk: '>=3.0.0 <4.0.0'
-
 dependencies:
   flutter:
     sdk: flutter
@@ -14,29 +6,26 @@ dependencies:
 
   # State Management
   provider: ^6.1.2
-  flutter_riverpod: ^2.5.1
 
   # Navigation
   go_router: ^14.2.7
 
-  # Network & API
-  http: ^1.2.1
+  # Network & API (оставляем для будущего custom backend)
   dio: ^5.7.0
+
+  # Firebase
+  firebase_core: ^2.24.2
+  firebase_auth: ^4.16.0
+  cloud_firestore: ^4.14.0
 
   # Storage
   shared_preferences: ^2.3.2
   flutter_secure_storage: ^9.2.2
 
-  # UI & Animations
-  flutter_animate: ^4.5.0
-
   # Utils
   intl: ^0.19.0
   uuid: ^4.5.0
-  equatable: ^2.0.5
   json_annotation: ^4.9.0
-
-  # Platform detection
   universal_io: ^2.2.2
 
 dev_dependencies:
@@ -45,20 +34,3 @@ dev_dependencies:
   flutter_lints: ^4.0.0
   build_runner: ^2.4.12
   json_serializable: ^6.8.0
-
-flutter:
-  uses-material-design: true
-
-  # assets:
-  #   - assets/images/
-  #   - assets/images/mascots/
-  #   - assets/images/backgrounds/
-  #   - assets/images/ui_elements/
-  #   - assets/animations/
-
-  # fonts:
-  #   - family: GameFont
-  #     fonts:
-  #       - asset: assets/fonts/game_font_regular.ttf
-  #       - asset: assets/fonts/game_font_bold.ttf
-  #         weight: 700

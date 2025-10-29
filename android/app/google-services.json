@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "994019244347",
+    "project_id": "language-quest-d7abc",
+    "storage_bucket": "language-quest-d7abc.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:994019244347:android:ebaf1f316c75a4dcda1f1e",
+        "android_client_info": {
+          "package_name": "com.languagequest.language_quest"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDLlm80bca88lX1ekhUvSdEs0wTrPXtSzw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

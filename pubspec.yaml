@@ -1,0 +1,78 @@
+name: language_quest
+description: Gamified language learning app with Y2K/Kirby design
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  cupertino_icons: ^1.0.6
+
+  # State Management
+  provider: ^6.1.1
+  flutter_riverpod: ^2.4.9
+
+  # Navigation
+  go_router: ^13.0.0
+
+  # Network & API
+  http: ^1.2.0
+  dio: ^5.4.0
+  socket_io_client: ^2.0.3  # WebSocket для real-time
+
+  # Storage
+  shared_preferences: ^2.2.2
+  flutter_secure_storage: ^9.0.0
+  hive: ^2.2.3
+  hive_flutter: ^1.1.0
+
+  # Backend (Firebase)
+  firebase_core: ^2.24.2
+  firebase_auth: ^4.16.0
+  cloud_firestore: ^4.14.0
+  firebase_storage: ^11.6.0
+
+  # UI & Animations
+  flutter_animate: ^4.3.0
+  lottie: ^3.0.0
+  confetti: ^0.7.0
+  shimmer: ^3.0.0
+
+  # Utils
+  intl: ^0.18.1
+  uuid: ^4.3.3
+  equatable: ^2.0.5
+  freezed_annotation: ^2.4.1
+  json_annotation: ^4.8.1
+
+  # Platform detection
+  universal_io: ^2.2.2
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.1
+  build_runner: ^2.4.7
+  freezed: ^2.4.6
+  json_serializable: ^6.7.1
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/images/
+    - assets/images/mascots/
+    - assets/images/backgrounds/
+    - assets/images/ui_elements/
+    - assets/animations/
+
+  fonts:
+    - family: GameFont
+      fonts:
+        - asset: assets/fonts/game_font_regular.ttf
+        - asset: assets/fonts/game_font_bold.ttf
+          weight: 700

@@ -1,11 +1,13 @@
 import 'package:flutter/foundation.dart';
 import '../../../data/models/lesson_model.dart';
 import '../../../data/repositories/lesson_repository.dart';
+import '../../../data/services/progress_service.dart';
 
 enum LessonsStatus { initial, loading, loaded, error }
 
 class LessonsProvider extends ChangeNotifier {
   final LessonRepository _lessonRepository;
+  final ProgressService _progressService;
 
   LessonsStatus _status = LessonsStatus.initial;
   List<LessonModel> _lessons = [];
@@ -25,7 +27,7 @@ class LessonsProvider extends ChangeNotifier {
   LessonLevel? get filterLevel => _filterLevel;
   LessonType? get filterType => _filterType;
 
-  LessonsProvider(this._lessonRepository);
+  LessonsProvider(this._lessonRepository, this._progressService);
 
   // Загрузить все уроки
   Future<void> loadLessons() async {

@@ -75,17 +75,17 @@ Map<String, dynamic> _$LessonProgressToJson(LessonProgress instance) =>
     };
 
 Achievement _$AchievementFromJson(Map<String, dynamic> json) => Achievement(
-      id: json['id'] as String,
-      title: json['title'] as String,
-      description: json['description'] as String,
-      iconUrl: json['iconUrl'] as String,
-      isUnlocked: json['isUnlocked'] as bool,
-      unlockedAt: json['unlockedAt'] == null
-          ? null
-          : DateTime.parse(json['unlockedAt'] as String),
-      experienceReward: (json['experienceReward'] as num).toInt(),
-      coinsReward: (json['coinsReward'] as num).toInt(),
-    );
+  id: json['id'] as String,
+  title: json['title'] as String,
+  description: json['description'] as String,
+  iconUrl: json['iconUrl'] as String,
+  isUnlocked: json['isUnlocked'] as bool,
+  unlockedAt: json['unlockedAt'] == null
+      ? null
+      : DateTime.parse(json['unlockedAt'] as String),
+  experienceReward: (json['experienceReward'] as num).toInt(),
+  coinsReward: (json['coinsReward'] as num).toInt(),
+);
 
 Map<String, dynamic> _$AchievementToJson(Achievement instance) =>
     <String, dynamic>{

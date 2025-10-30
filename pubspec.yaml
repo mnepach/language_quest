@@ -53,8 +53,7 @@ flutter:
     - assets/images/ui_elements/
     - assets/animations/
 
-  # Раскомментируй когда добавишь шрифты
   fonts:
-     - family: GameFont
-       fonts:
-         - asset: assets/fonts/CrystalUniverse-Oblique.ttf
+    - family: GameFont
+      fonts:
+        - asset: assets/fonts/CrystalUniverse-Oblique.ttf

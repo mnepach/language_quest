@@ -7,6 +7,7 @@ import '../features/home/screens/home_screen.dart';
 import '../features/lessons/screens/lesson_list_screen.dart';
 import '../features/profile/screens/profile_screen.dart';
 import '../features/auth/providers/auth_provider.dart';
+import '../features/lessons/screens/lesson_detail_screen.dart';
 
 class AppRouter {
   static GoRouter router(BuildContext context) {
@@ -47,6 +48,13 @@ class AppRouter {
         GoRoute(
           path: '/lessons',
           builder: (context, state) => const LessonListScreen(),
+        ),
+        GoRoute(
+          path: '/lessons/:id',
+          builder: (context, state) {
+            final lessonId = state.pathParameters['id']!;
+            return LessonDetailScreen(lessonId: lessonId);
+          },
         ),
         GoRoute(
           path: '/profile',

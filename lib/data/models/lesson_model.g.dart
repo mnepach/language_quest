@@ -7,23 +7,23 @@ part of 'lesson_model.dart';
 // **************************************************************************
 
 LessonModel _$LessonModelFromJson(Map<String, dynamic> json) => LessonModel(
-      id: json['id'] as String,
-      title: json['title'] as String,
-      description: json['description'] as String,
-      level: $enumDecode(_$LessonLevelEnumMap, json['level']),
-      type: $enumDecode(_$LessonTypeEnumMap, json['type']),
-      experienceReward: (json['experienceReward'] as num).toInt(),
-      coinsReward: (json['coinsReward'] as num).toInt(),
-      estimatedMinutes: (json['estimatedMinutes'] as num).toInt(),
-      isLocked: json['isLocked'] as bool? ?? false,
-      isCompleted: json['isCompleted'] as bool? ?? false,
-      progress: (json['progress'] as num?)?.toDouble(),
-      tags:
-          (json['tags'] as List<dynamic>?)?.map((e) => e as String).toList() ??
-              const [],
-      thumbnailUrl: json['thumbnailUrl'] as String?,
-      order: (json['order'] as num).toInt(),
-    );
+  id: json['id'] as String,
+  title: json['title'] as String,
+  description: json['description'] as String,
+  level: $enumDecode(_$LessonLevelEnumMap, json['level']),
+  type: $enumDecode(_$LessonTypeEnumMap, json['type']),
+  experienceReward: (json['experienceReward'] as num).toInt(),
+  coinsReward: (json['coinsReward'] as num).toInt(),
+  estimatedMinutes: (json['estimatedMinutes'] as num).toInt(),
+  isLocked: json['isLocked'] as bool? ?? false,
+  isCompleted: json['isCompleted'] as bool? ?? false,
+  progress: (json['progress'] as num?)?.toDouble(),
+  tags:
+      (json['tags'] as List<dynamic>?)?.map((e) => e as String).toList() ??
+      const [],
+  thumbnailUrl: json['thumbnailUrl'] as String?,
+  order: (json['order'] as num).toInt(),
+);
 
 Map<String, dynamic> _$LessonModelToJson(LessonModel instance) =>
     <String, dynamic>{
@@ -100,27 +100,26 @@ Map<String, dynamic> _$LessonSectionToJson(LessonSection instance) =>
     };
 
 Quiz _$QuizFromJson(Map<String, dynamic> json) => Quiz(
-      id: json['id'] as String,
-      questions: (json['questions'] as List<dynamic>)
-          .map((e) => QuizQuestion.fromJson(e as Map<String, dynamic>))
-          .toList(),
-      passingScore: (json['passingScore'] as num).toInt(),
-    );
+  id: json['id'] as String,
+  questions: (json['questions'] as List<dynamic>)
+      .map((e) => QuizQuestion.fromJson(e as Map<String, dynamic>))
+      .toList(),
+  passingScore: (json['passingScore'] as num).toInt(),
+);
 
 Map<String, dynamic> _$QuizToJson(Quiz instance) => <String, dynamic>{
-      'id': instance.id,
-      'questions': instance.questions,
-      'passingScore': instance.passingScore,
-    };
+  'id': instance.id,
+  'questions': instance.questions,
+  'passingScore': instance.passingScore,
+};
 
 QuizQuestion _$QuizQuestionFromJson(Map<String, dynamic> json) => QuizQuestion(
-      id: json['id'] as String,
-      question: json['question'] as String,
-      options:
-          (json['options'] as List<dynamic>).map((e) => e as String).toList(),
-      correctAnswerIndex: (json['correctAnswerIndex'] as num).toInt(),
-      explanation: json['explanation'] as String?,
-    );
+  id: json['id'] as String,
+  question: json['question'] as String,
+  options: (json['options'] as List<dynamic>).map((e) => e as String).toList(),
+  correctAnswerIndex: (json['correctAnswerIndex'] as num).toInt(),
+  explanation: json['explanation'] as String?,
+);
 
 Map<String, dynamic> _$QuizQuestionToJson(QuizQuestion instance) =>
     <String, dynamic>{

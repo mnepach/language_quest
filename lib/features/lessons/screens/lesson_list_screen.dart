@@ -6,6 +6,7 @@ import '../../../data/models/lesson_model.dart';
 import '../providers/lessons_provider.dart';
 import '../../../shared/widgets/loading_indicator.dart';
 import '../../../shared/widgets/error_widget.dart';
+import 'package:go_router/go_router.dart';
 
 class LessonListScreen extends StatefulWidget {
   const LessonListScreen({super.key});
@@ -175,7 +176,7 @@ class _LessonListScreenState extends State<LessonListScreen> {
       margin: EdgeInsets.only(bottom: AppDimensions.spacingM),
       child: InkWell(
         onTap: lesson.isLocked ? null : () {
-          // TODO: Navigate to lesson detail
+          context.push('/lessons/${lesson.id}');
         },
         borderRadius: BorderRadius.circular(AppDimensions.radiusL),
         child: Padding(

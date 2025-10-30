@@ -4,6 +4,8 @@ import 'package:provider/provider.dart';
 import '../features/auth/screens/login_screen.dart';
 import '../features/auth/screens/register_screen.dart';
 import '../features/home/screens/home_screen.dart';
+import '../features/lessons/screens/lesson_list_screen.dart';
+import '../features/profile/screens/profile_screen.dart';
 import '../features/auth/providers/auth_provider.dart';
 
 class AppRouter {
@@ -42,7 +44,14 @@ class AppRouter {
           path: '/home',
           builder: (context, state) => const HomeScreen(),
         ),
-        // Добавь больше маршрутов
+        GoRoute(
+          path: '/lessons',
+          builder: (context, state) => const LessonListScreen(),
+        ),
+        GoRoute(
+          path: '/profile',
+          builder: (context, state) => const ProfileScreen(),
+        ),
       ],
     );
   }

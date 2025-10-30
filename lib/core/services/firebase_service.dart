@@ -1,7 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:language_quest/firebase_options.dart';
+import '../../../firebase_options.dart';
 import '../../data/models/user_model.dart';
 
 class FirebaseService {
@@ -22,7 +22,6 @@ class FirebaseService {
     required String username,
   }) async {
     try {
-      // Создаем пользователя в Firebase Auth
       final userCredential = await _auth.createUserWithEmailAndPassword(
         email: email,
         password: password,
@@ -31,8 +30,32 @@ class FirebaseService {
       final uid = userCredential.user!.uid;
       final now = DateTime.now();
 
-      // Создаем документ пользователя в Firestore
       final userData = {
+        'id': uid,
+        'email': email,
+        'username': username,
+        'level': 1,
+        'experience': 0,
+        'coins': 50,
+        'createdAt': Timestamp.fromDate(now),
+        'lastLoginAt': Timestamp.fromDate(now),
+        'progress': {
+          'completedLessons': 0,
+          'totalLessons': 50,
+          'currentStreak': 0,
+          'longestStreak': 0,
+          'skillLevels': {
+            'vocabulary': 0,
+            'grammar': 0,
+            'listening': 0,
+            'speaking': 0,
+          },
+        },
+      };
+
+      await _firestore.collection('users').doc(uid).set(userData);
+
+      final userDataForModel = {
         'id': uid,
         'email': email,
         'username': username,
@@ -55,9 +78,7 @@ class FirebaseService {
         },
       };
 
-      await _firestore.collection('users').doc(uid).set(userData);
-
-      return UserModel.fromJson(userData);
+      return UserModel.fromJson(userDataForModel);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         throw Exception('The password provided is too weak.');
@@ -70,7 +91,6 @@ class FirebaseService {
     }
   }
 
-  // Вход
   static Future<UserModel> login({
     required String email,
     required String password,
@@ -83,19 +103,20 @@ class FirebaseService {
 
       final uid = userCredential.user!.uid;
 
-      // Обновляем lastLoginAt
       await _firestore.collection('users').doc(uid).update({
-        'lastLoginAt': DateTime.now().toIso8601String(),
+        'lastLoginAt': Timestamp.fromDate(DateTime.now()),
       });
 
-      // Получаем данные пользователя
       final doc = await _firestore.collection('users').doc(uid).get();
 
       if (!doc.exists) {
         throw Exception('User data not found');
       }
 
-      return UserModel.fromJson(doc.data()!);
+      final data = doc.data()!;
+      final userData = _convertFirestoreData(data);
+
+      return UserModel.fromJson(userData);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found' || e.code == 'wrong-password') {
         throw Exception('Invalid email or password');
@@ -106,12 +127,10 @@ class FirebaseService {
     }
   }
 
-  // Выход
   static Future<void> logout() async {
     await _auth.signOut();
   }
 
-  // Получение текущего пользователя
   static Future<UserModel?> getCurrentUser() async {
     try {
       final user = _auth.currentUser;
@@ -120,24 +139,24 @@ class FirebaseService {
       final doc = await _firestore.collection('users').doc(user.uid).get();
       if (!doc.exists) return null;
 
-      return UserModel.fromJson(doc.data()!);
+      final data = doc.data()!;
+      final userData = _convertFirestoreData(data);
+
+      return UserModel.fromJson(userData);
     } catch (e) {
       return null;
     }
   }
 
-  // Обновление профиля
   static Future<void> updateUser(String uid, Map<String, dynamic> data) async {
     await _firestore.collection('users').doc(uid).update(data);
   }
 
-  // Проверка email
   static Future<bool> isEmailVerified() async {
     await _auth.currentUser?.reload();
     return _auth.currentUser?.emailVerified ?? false;
   }
 
-  // Stream для отслеживания изменений пользователя
   static Stream<UserModel?> userStream() {
     return _auth.authStateChanges().asyncMap((user) async {
       if (user == null) return null;
@@ -145,7 +164,26 @@ class FirebaseService {
       final doc = await _firestore.collection('users').doc(user.uid).get();
       if (!doc.exists) return null;
 
-      return UserModel.fromJson(doc.data()!);
+      final data = doc.data()!;
+      final userData = _convertFirestoreData(data);
+
+      return UserModel.fromJson(userData);
     });
+  }
+
+  static Map<String, dynamic> _convertFirestoreData(Map<String, dynamic> data) {
+    final convertedData = Map<String, dynamic>.from(data);
+
+    if (convertedData['createdAt'] is Timestamp) {
+      convertedData['createdAt'] =
+          (convertedData['createdAt'] as Timestamp).toDate().toIso8601String();
+    }
+
+    if (convertedData['lastLoginAt'] is Timestamp) {
+      convertedData['lastLoginAt'] =
+          (convertedData['lastLoginAt'] as Timestamp).toDate().toIso8601String();
+    }
+
+    return convertedData;
   }
 }
